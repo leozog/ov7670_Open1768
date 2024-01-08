@@ -449,6 +449,16 @@
               <FileType>1</FileType>
               <FilePath>.\ov7670_LPC1768.c</FilePath>
             </File>
+            <File>
+              <FileName>menu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\menu.h</FilePath>
+            </File>
+            <File>
+              <FileName>menu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\menu.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

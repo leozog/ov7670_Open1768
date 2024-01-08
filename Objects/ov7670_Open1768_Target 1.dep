@@ -1,12 +1,12 @@
 Dependencies for Project 'ov7670_Open1768', Target 'Target 1': (DO NOT MODIFY !)
 CompilerVersion: 6190000::V6.19::ARMCLANG
-F (.\ov7670_LPC1768.h)(0x6599F9B3)()
+F (.\ov7670_LPC1768.h)(0x659C7781)()
 F (.\asciiLib.c)(0x5A00D764)(-xc -std=gnu11 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O3 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier-I./RTE/Device/LPC1768-I./RTE/_Target_1-IC:/Users/leonozog/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/leonozog/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Driver/Include-IC:/Users/leonozog/AppData/Local/Arm/Packs/Keil/LPC1700_DFP/2.6.1/Device/Include-IC:/Users/leonozog/AppData/Local/Arm/Packs/Keil/LPC1700_DFP/2.6.1/RTE_Driver-D__UVISION_VERSION="538" -D_RTE_ -DLPC175x_6x -D_RTE_-o ./objects/asciilib.o -MD)
 I (asciiLib.h)(0x5A00D750)
 I (C:\Keil_v5\ARM\ARMCLANG\include\string.h)(0x63892A08)
 F (.\asciiLib.h)(0x5A00D750)()
-F (.\lcd_ctrl.c)(0x659B5EAC)(-xc -std=gnu11 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O3 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier-I./RTE/Device/LPC1768-I./RTE/_Target_1-IC:/Users/leonozog/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/leonozog/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Driver/Include-IC:/Users/leonozog/AppData/Local/Arm/Packs/Keil/LPC1700_DFP/2.6.1/Device/Include-IC:/Users/leonozog/AppData/Local/Arm/Packs/Keil/LPC1700_DFP/2.6.1/RTE_Driver-D__UVISION_VERSION="538" -D_RTE_ -DLPC175x_6x -D_RTE_-o ./objects/lcd_ctrl.o -MD)
-I (lcd_ctrl.h)(0x659B5E8B)
+F (.\lcd_ctrl.c)(0x659C6FF5)(-xc -std=gnu11 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O3 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier-I./RTE/Device/LPC1768-I./RTE/_Target_1-IC:/Users/leonozog/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/leonozog/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Driver/Include-IC:/Users/leonozog/AppData/Local/Arm/Packs/Keil/LPC1700_DFP/2.6.1/Device/Include-IC:/Users/leonozog/AppData/Local/Arm/Packs/Keil/LPC1700_DFP/2.6.1/RTE_Driver-D__UVISION_VERSION="538" -D_RTE_ -DLPC175x_6x -D_RTE_-o ./objects/lcd_ctrl.o -MD)
+I (lcd_ctrl.h)(0x659C6411)
 I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x63892A08)
 I (Open1768_LCD.h)(0x5BCF6986)
 I (C:\Users\leonozog\AppData\Local\Arm\Packs\Keil\LPC1700_DFP\2.6.1\Device\Include\LPC17xx.h)(0x5849CC32)
@@ -22,7 +22,7 @@ I (C:\Keil_v5\ARM\ARMCLANG\include\string.h)(0x63892A08)
 I (C:\Keil_v5\ARM\ARMCLANG\include\stdio.h)(0x63892A08)
 I (C:\Keil_v5\ARM\ARMCLANG\include\stdarg.h)(0x63892A08)
 I (C:\Keil_v5\ARM\ARMCLANG\include\stdlib.h)(0x63892A08)
-F (.\lcd_ctrl.h)(0x659B5E8B)()
+F (.\lcd_ctrl.h)(0x659C6411)()
 F (.\LCD_ILI9325.c)(0x659B4030)(-xc -std=gnu11 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O3 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier-I./RTE/Device/LPC1768-I./RTE/_Target_1-IC:/Users/leonozog/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/leonozog/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Driver/Include-IC:/Users/leonozog/AppData/Local/Arm/Packs/Keil/LPC1700_DFP/2.6.1/Device/Include-IC:/Users/leonozog/AppData/Local/Arm/Packs/Keil/LPC1700_DFP/2.6.1/RTE_Driver-D__UVISION_VERSION="538" -D_RTE_ -DLPC175x_6x -D_RTE_-o ./objects/lcd_ili9325.o -MD)
 I (LCD_ILI9325.h)(0x6599B8CD)
 I (Open1768_LCD.h)(0x5BCF6986)
@@ -35,17 +35,23 @@ I (C:\Users\leonozog\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\
 I (C:\Users\leonozog\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\mpu_armv7.h)(0x62702BDE)
 I (C:\Users\leonozog\AppData\Local\Arm\Packs\Keil\LPC1700_DFP\2.6.1\Device\Include\system_LPC17xx.h)(0x5849CC32)
 F (.\LCD_ILI9325.h)(0x6599B8CD)()
-F (.\main.c)(0x659B5FAA)(-xc -std=gnu11 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O3 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier-I./RTE/Device/LPC1768-I./RTE/_Target_1-IC:/Users/leonozog/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/leonozog/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Driver/Include-IC:/Users/leonozog/AppData/Local/Arm/Packs/Keil/LPC1700_DFP/2.6.1/Device/Include-IC:/Users/leonozog/AppData/Local/Arm/Packs/Keil/LPC1700_DFP/2.6.1/RTE_Driver-D__UVISION_VERSION="538" -D_RTE_ -DLPC175x_6x -D_RTE_-o ./objects/main.o -MD)
-I (ov7670_LPC1768.h)(0x6599F9B3)
-I (ov7670.h)(0x659B5416)
+F (.\main.c)(0x659C7CFF)(-xc -std=gnu11 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O3 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier-I./RTE/Device/LPC1768-I./RTE/_Target_1-IC:/Users/leonozog/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/leonozog/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Driver/Include-IC:/Users/leonozog/AppData/Local/Arm/Packs/Keil/LPC1700_DFP/2.6.1/Device/Include-IC:/Users/leonozog/AppData/Local/Arm/Packs/Keil/LPC1700_DFP/2.6.1/RTE_Driver-D__UVISION_VERSION="538" -D_RTE_ -DLPC175x_6x -D_RTE_-o ./objects/main.o -MD)
+I (C:\Users\leonozog\AppData\Local\Arm\Packs\Keil\LPC1700_DFP\2.6.1\Device\Include\LPC17xx.h)(0x5849CC32)
+I (C:\Users\leonozog\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\core_cm3.h)(0x62702BDE)
 I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x63892A08)
-I (lcd_ctrl.h)(0x659B5E8B)
+I (C:\Users\leonozog\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cmsis_version.h)(0x62702BDE)
+I (C:\Users\leonozog\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cmsis_compiler.h)(0x62702BDE)
+I (C:\Users\leonozog\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cmsis_armclang.h)(0x62702BDE)
+I (C:\Users\leonozog\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\mpu_armv7.h)(0x62702BDE)
+I (C:\Users\leonozog\AppData\Local\Arm\Packs\Keil\LPC1700_DFP\2.6.1\Device\Include\system_LPC17xx.h)(0x5849CC32)
 I (C:\Users\leonozog\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Driver\Include\Driver_USART.h)(0x62702BDE)
 I (C:\Users\leonozog\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Driver\Include\Driver_Common.h)(0x62702BDE)
 I (C:\Keil_v5\ARM\ARMCLANG\include\stddef.h)(0x63892A08)
 I (C:\Keil_v5\ARM\ARMCLANG\include\stdbool.h)(0x63892A08)
-I (C:\Keil_v5\ARM\ARMCLANG\include\stdio.h)(0x63892A08)
-I (C:\Keil_v5\ARM\ARMCLANG\include\string.h)(0x63892A08)
+I (ov7670_LPC1768.h)(0x659C7781)
+I (ov7670.h)(0x659C8061)
+I (lcd_ctrl.h)(0x659C6411)
+I (menu.h)(0x659C6FD9)
 F (.\Open1768_LCD.c)(0x6599B2D6)(-xc -std=gnu11 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O3 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier-I./RTE/Device/LPC1768-I./RTE/_Target_1-IC:/Users/leonozog/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/leonozog/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Driver/Include-IC:/Users/leonozog/AppData/Local/Arm/Packs/Keil/LPC1700_DFP/2.6.1/Device/Include-IC:/Users/leonozog/AppData/Local/Arm/Packs/Keil/LPC1700_DFP/2.6.1/RTE_Driver-D__UVISION_VERSION="538" -D_RTE_ -DLPC175x_6x -D_RTE_-o ./objects/open1768_lcd.o -MD)
 I (Open1768_LCD.h)(0x5BCF6986)
 I (C:\Users\leonozog\AppData\Local\Arm\Packs\Keil\LPC1700_DFP\2.6.1\Device\Include\LPC17xx.h)(0x5849CC32)
@@ -58,13 +64,13 @@ I (C:\Users\leonozog\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\
 I (C:\Users\leonozog\AppData\Local\Arm\Packs\Keil\LPC1700_DFP\2.6.1\Device\Include\system_LPC17xx.h)(0x5849CC32)
 I (C:\Keil_v5\ARM\ARMCLANG\include\stdlib.h)(0x63892A08)
 F (.\Open1768_LCD.h)(0x5BCF6986)()
-F (.\ov7670.c)(0x659B5475)(-xc -std=gnu11 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O3 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier-I./RTE/Device/LPC1768-I./RTE/_Target_1-IC:/Users/leonozog/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/leonozog/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Driver/Include-IC:/Users/leonozog/AppData/Local/Arm/Packs/Keil/LPC1700_DFP/2.6.1/Device/Include-IC:/Users/leonozog/AppData/Local/Arm/Packs/Keil/LPC1700_DFP/2.6.1/RTE_Driver-D__UVISION_VERSION="538" -D_RTE_ -DLPC175x_6x -D_RTE_-o ./objects/ov7670.o -MD)
-I (ov7670.h)(0x659B5416)
+F (.\ov7670.c)(0x659C86FD)(-xc -std=gnu11 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O3 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier-I./RTE/Device/LPC1768-I./RTE/_Target_1-IC:/Users/leonozog/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/leonozog/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Driver/Include-IC:/Users/leonozog/AppData/Local/Arm/Packs/Keil/LPC1700_DFP/2.6.1/Device/Include-IC:/Users/leonozog/AppData/Local/Arm/Packs/Keil/LPC1700_DFP/2.6.1/RTE_Driver-D__UVISION_VERSION="538" -D_RTE_ -DLPC175x_6x -D_RTE_-o ./objects/ov7670.o -MD)
+I (ov7670.h)(0x659C8061)
 I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x63892A08)
-F (.\ov7670.h)(0x659B5416)()
-F (.\ov7670_LPC1768.c)(0x659B5433)(-xc -std=gnu11 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O3 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier-I./RTE/Device/LPC1768-I./RTE/_Target_1-IC:/Users/leonozog/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/leonozog/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Driver/Include-IC:/Users/leonozog/AppData/Local/Arm/Packs/Keil/LPC1700_DFP/2.6.1/Device/Include-IC:/Users/leonozog/AppData/Local/Arm/Packs/Keil/LPC1700_DFP/2.6.1/RTE_Driver-D__UVISION_VERSION="538" -D_RTE_ -DLPC175x_6x -D_RTE_-o ./objects/ov7670_lpc1768.o -MD)
-I (ov7670_LPC1768.h)(0x6599F9B3)
-I (ov7670.h)(0x659B5416)
+F (.\ov7670.h)(0x659C8061)()
+F (.\ov7670_LPC1768.c)(0x659C784A)(-xc -std=gnu11 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O3 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier-I./RTE/Device/LPC1768-I./RTE/_Target_1-IC:/Users/leonozog/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/leonozog/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Driver/Include-IC:/Users/leonozog/AppData/Local/Arm/Packs/Keil/LPC1700_DFP/2.6.1/Device/Include-IC:/Users/leonozog/AppData/Local/Arm/Packs/Keil/LPC1700_DFP/2.6.1/RTE_Driver-D__UVISION_VERSION="538" -D_RTE_ -DLPC175x_6x -D_RTE_-o ./objects/ov7670_lpc1768.o -MD)
+I (ov7670_LPC1768.h)(0x659C7781)
+I (ov7670.h)(0x659C8061)
 I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x63892A08)
 I (C:\Users\leonozog\AppData\Local\Arm\Packs\Keil\LPC1700_DFP\2.6.1\Device\Include\LPC17xx.h)(0x5849CC32)
 I (C:\Users\leonozog\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\core_cm3.h)(0x62702BDE)
@@ -78,6 +84,11 @@ I (C:\Keil_v5\ARM\ARMCLANG\include\stdbool.h)(0x63892A08)
 I (C:\Users\leonozog\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Driver\Include\Driver_I2C.h)(0x62702BDE)
 I (C:\Users\leonozog\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Driver\Include\Driver_Common.h)(0x62702BDE)
 I (C:\Keil_v5\ARM\ARMCLANG\include\stddef.h)(0x63892A08)
+F (.\menu.h)(0x659C6FD9)()
+F (.\menu.c)(0x659C6F93)(-xc -std=gnu11 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O3 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier-I./RTE/Device/LPC1768-I./RTE/_Target_1-IC:/Users/leonozog/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/leonozog/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Driver/Include-IC:/Users/leonozog/AppData/Local/Arm/Packs/Keil/LPC1700_DFP/2.6.1/Device/Include-IC:/Users/leonozog/AppData/Local/Arm/Packs/Keil/LPC1700_DFP/2.6.1/RTE_Driver-D__UVISION_VERSION="538" -D_RTE_ -DLPC175x_6x -D_RTE_-o ./objects/menu.o -MD)
+I (menu.h)(0x659C6FD9)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x63892A08)
+I (lcd_ctrl.h)(0x659C6411)
 F (C:/Users/leonozog/AppData/Local/Arm/Packs/Keil/LPC1700_DFP/2.6.1/RTE_Driver/I2C_LPC17xx.c)(0x5D5C625A)(-xc -std=gnu11 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O3 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier-I./RTE/Device/LPC1768-I./RTE/_Target_1-IC:/Users/leonozog/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/leonozog/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Driver/Include-IC:/Users/leonozog/AppData/Local/Arm/Packs/Keil/LPC1700_DFP/2.6.1/Device/Include-IC:/Users/leonozog/AppData/Local/Arm/Packs/Keil/LPC1700_DFP/2.6.1/RTE_Driver-D__UVISION_VERSION="538" -D_RTE_ -DLPC175x_6x -D_RTE_-o ./objects/i2c_lpc17xx.o -MD)
 I (C:\Users\leonozog\AppData\Local\Arm\Packs\Keil\LPC1700_DFP\2.6.1\RTE_Driver\I2C_LPC17xx.h)(0x5D5C625A)
 I (C:\Keil_v5\ARM\ARMCLANG\include\string.h)(0x63892A08)

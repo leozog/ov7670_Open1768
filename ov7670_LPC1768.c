@@ -4,7 +4,7 @@
 #include "PIN_LPC17xx.h"
 #include "Driver_I2C.h" 
 
-ov7670 ov;
+volatile ov7670 ov;
 
 extern ARM_DRIVER_I2C            Driver_I2C0; //P0.27, P0.28
 static ARM_DRIVER_I2C *I2Cdrv = &Driver_I2C0;
@@ -61,7 +61,7 @@ void wait_for_pclk()
 	} while(pclk == 0); // wait for high
 }
 
-uint8_t read_data()
+volatile uint8_t read_data()
 {
 	return (((LPC_GPIO1->FIOPIN>>4) & 0b00000001) | ((LPC_GPIO1->FIOPIN>>7) & 0b00001110) | ((LPC_GPIO1->FIOPIN>>10) & 0b11110000));
 }
@@ -86,18 +86,18 @@ extern void EINT3_IRQHandler(void)
 	}
 	
 	/* falling P0_17_IRQ */
-	if( LPC_GPIOINT->IO0IntStatF & P0_17_IRQ)
+	/*if( LPC_GPIOINT->IO0IntStatF & P0_17_IRQ)
 	{
 		LPC_GPIOINT->IO0IntClr = P0_17_IRQ; // Clear the interrupt.
 		ov_href_down(&ov);
-	}
+	}*/
 }
 
 ov_error ov_lpc1768_init(void (*callback_frame)(), void (*callback_row)(), void (*callback_pixel)(uint16_t))
 {
 	/* disable interupts */
-	//__disable_irq();
 	NVIC_DisableIRQ(EINT3_IRQn);
+	
 	
 	/* clkout on 1.27 */
 	LPC_PINCON->PINSEL3 &=~(3<<22);
@@ -150,7 +150,7 @@ ov_error ov_lpc1768_init(void (*callback_frame)(), void (*callback_row)(), void 
 	LPC_PINCON->PINMODE1 |= (0x3 << 2);  // pull-down
 	LPC_GPIO0->FIODIR   &= ~(0x1 << 17); // input
 	LPC_GPIOINT->IO0IntEnR |= P0_17_IRQ; // interupt enable raising
-	LPC_GPIOINT->IO0IntEnF |= P0_17_IRQ; // interupt enable faling
+	//LPC_GPIOINT->IO0IntEnF |= P0_17_IRQ; // interupt enable faling
 	
 	/* P0.18 as pclk */
 	LPC_PINCON->PINSEL1 &= ~(0x3 << 4);  // mode 00 GPIO
@@ -167,17 +167,33 @@ ov_error ov_lpc1768_init(void (*callback_frame)(), void (*callback_row)(), void 
 	PIN_Configure(1, 16, PIN_FUNC_0, PIN_PINMODE_REPEATER, PIN_PINMODE_NORMAL);
 	PIN_Configure(1, 17, PIN_FUNC_0, PIN_PINMODE_REPEATER, PIN_PINMODE_NORMAL);
 	
+	
 	/* reset interupts */
-	LPC_SC->EXTINT = 1;
+	LPC_SC->EXTINT = 0xF;
 	
 	/* enable interupts */
 	NVIC_EnableIRQ(EINT3_IRQn);
-	__enable_irq();
 	
 	return OV_A_OKAY;
 }
 
-ov7670* ov_get_handle()
+volatile ov7670* ov_lpc1768_get_handle()
 {
 	return &ov;
+}
+
+void ov_lpc1768_start()
+{
+	LPC_GPIOINT->IO0IntClr = P0_16_IRQ; // Clear the interrupts.
+	LPC_GPIOINT->IO0IntClr = P0_17_IRQ; //
+	NVIC_EnableIRQ(EINT3_IRQn);
+	ov_start(&ov);
+}
+
+void ov_lpc1768_stop()
+{
+	ov_stop(&ov);
+	NVIC_DisableIRQ(EINT3_IRQn);
+	LPC_GPIOINT->IO0IntClr = P0_16_IRQ; // Clear the interrupts.
+	LPC_GPIOINT->IO0IntClr = P0_17_IRQ; //
 }

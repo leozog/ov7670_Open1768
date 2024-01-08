@@ -11,10 +11,10 @@ char* ov_error_what(ov_error err)
 	return "OV_ERROR_UNKNOWN";
 }
 
-void ov_init(ov7670 *ov)
+void ov_init(volatile ov7670 *ov)
 {
 	/* init internal variables */
-	ov->ready = 3; // wait for this many frames before starting
+	ov->state = OV_STOP;
 	ov->img_w = 0;
 	ov->img_h = 0;
 	ov->px_x = 0;
@@ -24,13 +24,18 @@ void ov_init(ov7670 *ov)
 	ov_i2c_set(ov, OV_REG_COM7, 0x80);
 	ov_sleep(1000000); // need to wait for about 1ms
 	
-	/* set internal clock to (clkout / 14) */
-	ov_i2c_set(ov, OV_REG_CLKRC, 0x0B);
+	/* set internal clock to (clkout / 8) */
+	ov_i2c_set(ov, OV_REG_CLKRC, 0x07);
 	
 	
-	/* set color output to 555 */
+	/* set color output to 565 */
 	ov_i2c_set(ov, OV_REG_COM7, 0b100);
-	ov_i2c_set(ov, OV_REG_COM15, 0xF0);
+	//ov_i2c_set(ov, OV_REG_COM15, 0xF0); //555
+	ov_i2c_set(ov, OV_REG_COM15, 0xD0); //565
+	
+	/* dummy pixel insert in horizontal direction */
+	//ov_i2c_set(ov, OV_REG_EXHCH, 0x00);
+	//ov_i2c_set(ov, OV_REG_EXHCL, 0x10);
 	
 	// gain
 	//ov_i2c_set(ov, OV_REG_COM9, 0x08);
@@ -42,21 +47,21 @@ void ov_init(ov7670 *ov)
 	//ov_i2c_set(ov, OV_REG_SATCTR, 0xF0);
 }
 
-uint8_t ov_i2c_get(ov7670 *ov, uint8_t addr)
+uint8_t ov_i2c_get(volatile ov7670 *ov, uint8_t addr)
 {
 	uint8_t buf[1];
 	while(ov->i2c_get_reg(addr, buf, 1));
 	return *buf;
 }
 
-void ov_i2c_set(ov7670 *ov, uint8_t addr, uint8_t val)
+void ov_i2c_set(volatile ov7670 *ov, uint8_t addr, uint8_t val)
 {
 	uint8_t buf[1];
 	*buf = val;
 	while(ov->i2c_set_reg(addr, buf, 1));
 }
 
-void ov_i2c_bit(ov7670 *ov, uint8_t addr, uint8_t mask, uint8_t val)
+void ov_i2c_bit(volatile ov7670 *ov, uint8_t addr, uint8_t mask, uint8_t val)
 {
 	uint8_t buf = ov_i2c_get(ov, addr);
 	buf &= ~mask;
@@ -70,50 +75,89 @@ void ov_sleep(uint32_t iter)
   for (i = iter; i > 0; i--) {;}
 }
 
-void ov_vsync(ov7670 *ov)
+void ov_start(volatile ov7670 *ov)
 {
-	if(ov->ready > 0) --ov->ready;
+	ov->state = OV_STOP_WAIT_FOR_VS;
+}
+
+void ov_stop(volatile ov7670 *ov)
+{
+	ov->state = OV_STOP;
+}
+
+void ov_vsync(volatile ov7670 *ov)
+{
+	if(ov->state == OV_STOP)
+		return;
 	
 	ov->px_y = 0;
 	
 	ov->callback_frame();
+	
+	if(ov->state == OV_STOP_WAIT_FOR_VS)
+		ov->state = OV_RUNNING;
 }
 
-void ov_href_up(ov7670 *ov)
+void ov_href_up(volatile ov7670 *ov)
 {
-	if(ov->ready == 0 && ov->px_y < ov->img_h)
+	if(ov->state != OV_RUNNING)
+		return;
+	if(ov->px_y < ov->img_h)
 	{
-		ov->px_x = 0;
+		if(ov->state != OV_RUNNING)
+			return;
 		ov->wait_for_pclk();
-		for(int i = 0; i < ov->img_w; i++)
+		for(ov->px_x = 0; ov->px_x < ov->img_w; ov->px_x++)
 		{
-			ov->wait_for_pclk();
-			uint16_t val2 = ov->read_data();
-			ov->wait_for_pclk();
-			uint16_t val1 = ov->read_data();
-			uint16_t r = (val1 & 0b00000011)<<3 | (val2 & 0b11100000)>>5;
-			uint16_t g = (val1 & 0b01111100)>>2;
-			uint16_t b = (val2 & 0b00011111);
+			if(ov->state != OV_RUNNING)
+				return;
 			
-			ov->callback_pixel(r<<11 | g<<6 | b);
+			ov->wait_for_pclk();
+			volatile uint8_t val1 = ov->read_data();
+			ov->wait_for_pclk();
+			volatile uint8_t val2 = ov->read_data();
+			
+			ov->buffer[ov->px_x * 2] = val1;
+			ov->buffer[ov->px_x * 2 + 1] = val2;
 		}
-		ov->callback_row();
+		for(ov->px_x = 0; ov->px_x < ov->img_w; ov->px_x++)
+		{
+			if(ov->state != OV_RUNNING)
+				return;
+			
+			uint16_t val1 = ov->buffer[ov->px_x * 2];
+			uint16_t val2 = ov->buffer[ov->px_x * 2 + 1];
+			
+			/*uint16_t r = (val2 & 0b00000011)<<3 | (val1 & 0b11100000)>>5; //555
+			uint16_t g = (val2 & 0b01111100)>>2;
+			uint16_t b = (val1 & 0b00011111);*/
+			
+			if(ov->img_skip_left <= ov->px_x && ov->px_x < ov->img_w - ov->img_skip_right)
+				//ov->callback_pixel(r<<11 | g<<6 | b); //555
+				ov->callback_pixel(val2<<8 | val1); //565
+		}
+		if(ov->img_skip_up <= ov->px_y && ov->px_y < ov->img_h - ov->img_skip_down)
+			ov->callback_row();
 	}
 }
 
-void ov_href_down(ov7670 *ov)
+/*void ov_href_down(ov7670 *ov)
 {
 	
-}
+}*/
 
-void ov_set_res(ov7670 *ov, ov_res res)
+void ov_set_res(volatile ov7670 *ov, ov_res res)
 {
 	if(res == OV_RES_LIVE)
 	{
-		ov->img_w = 280;
-		ov->img_h = 288;
-		ov_i2c_set(ov, OV_REG_COM3, 0x08);
-		ov_i2c_set(ov, OV_REG_COM14, 0x11);
+		ov->img_w = 320;
+		ov->img_h = 240;
+		ov->img_skip_left = (ov->img_w - 240) / 2;
+		ov->img_skip_right = (ov->img_w - 240) / 2;
+		ov->img_skip_up = 0;
+		ov->img_skip_down = 0;
+		ov_i2c_set(ov, OV_REG_COM3, 0x04);
+		ov_i2c_set(ov, OV_REG_COM14, 0x19);
 		ov_i2c_set(ov, OV_REG_SCALING_XSC, 0x3A);
 		ov_i2c_set(ov, OV_REG_SCALING_YSC, 0x35);
 		ov_i2c_set(ov, OV_REG_SCALING_DCWCTR, 0x11);
@@ -124,6 +168,10 @@ void ov_set_res(ov7670 *ov, ov_res res)
 	{
 		ov->img_w = 640;
 		ov->img_h = 480;
+		ov->img_skip_left = 0;
+		ov->img_skip_right = 0;
+		ov->img_skip_up = 0;
+		ov->img_skip_down = 0;
 		ov_i2c_set(ov, OV_REG_COM3, 0x00);
 		ov_i2c_set(ov, OV_REG_COM14, 0x00);
 		ov_i2c_set(ov, OV_REG_SCALING_XSC, 0x3A);
@@ -136,6 +184,10 @@ void ov_set_res(ov7670 *ov, ov_res res)
 	{
 		ov->img_w = 320;
 		ov->img_h = 240;
+		ov->img_skip_left = 0;
+		ov->img_skip_right = 0;
+		ov->img_skip_up = 0;
+		ov->img_skip_down = 0;
 		ov_i2c_set(ov, OV_REG_COM3, 0x04);
 		ov_i2c_set(ov, OV_REG_COM14, 0x19);
 		ov_i2c_set(ov, OV_REG_SCALING_XSC, 0x3A);
@@ -148,6 +200,10 @@ void ov_set_res(ov7670 *ov, ov_res res)
 	{
 		ov->img_w = 352;
 		ov->img_h = 288;
+		ov->img_skip_left = 0;
+		ov->img_skip_right = 0;
+		ov->img_skip_up = 0;
+		ov->img_skip_down = 0;
 		ov_i2c_set(ov, OV_REG_COM3, 0x08);
 		ov_i2c_set(ov, OV_REG_COM14, 0x11);
 		ov_i2c_set(ov, OV_REG_SCALING_XSC, 0x3A);
@@ -160,6 +216,10 @@ void ov_set_res(ov7670 *ov, ov_res res)
 	{
 		ov->img_w = 176;
 		ov->img_h = 144;
+		ov->img_skip_left = 0;
+		ov->img_skip_right = 0;
+		ov->img_skip_up = 0;
+		ov->img_skip_down = 0;
 		ov_i2c_set(ov, OV_REG_COM3, 0x0C);
 		ov_i2c_set(ov, OV_REG_COM14, 0x11);
 		ov_i2c_set(ov, OV_REG_SCALING_XSC, 0x3A);

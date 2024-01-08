@@ -18,7 +18,7 @@ void lcd_init()
 
 void lcd_write_str(uint16_t x, uint16_t y, uint16_t color1, uint16_t color2, const char *str)
 {
-	uint8_t c_buffer[16];
+	uint8_t c_buffer[64];
 	while(*str)
 	{
 		GetASCIICode(ASCII_8X16_System, c_buffer, *str);
@@ -65,6 +65,16 @@ void lcd_flush(uint16_t color)
 int lcd_row(int n)
 {
 	return n * 16;
+}
+
+int lcd_column(int n)
+{
+	return n * 8;
+}
+	
+uint16_t lcd_rgb(uint8_t r, uint8_t g, uint8_t b)
+{
+	return (r&0xF8)<<8 | (g&0xFC)<<3 | b>>3;
 }
 
 void lcd_img_start(lcd_img *img, uint16_t x, uint16_t y)

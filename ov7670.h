@@ -4,6 +4,9 @@
 /* i2c address */
 #define OV_I2C_ADDR 0x21
 
+/* row buffer size */
+#define OV_BUFFER_SIZE 1280
+
 /* i2c registers */
 #define OV_REG_CLKRC 								0x11
 #define OV_REG_COM7  								0x12
@@ -19,7 +22,8 @@
 #define OV_REG_SCALING_PCLK_DIV  		0x73
 #define OV_REG_SCALING_PCLK_DELAY  	0xA2
 #define OV_REG_SATCTR 							0xC9
-
+#define OV_REG_EXHCH								0x2A
+#define OV_REG_EXHCL								0x2B
 
 /* error codes */
 typedef uint8_t ov_error;
@@ -27,37 +31,54 @@ typedef uint8_t ov_error;
 #define OV_ERROR_I2C_FAIL 100
 char* ov_error_what(ov_error err);
 
-typedef struct {
-	int (*i2c_get_reg)(uint8_t addr, uint8_t *buf, uint32_t len);
-	int (*i2c_set_reg)(uint8_t addr, uint8_t *buf, uint32_t len);
-	void (*wait_for_pclk)();
-	uint8_t (*read_data)();
-	void (*callback_frame)();
-	void (*callback_row)();
-	void (*callback_pixel)(uint16_t color);
+/* state */
+typedef uint8_t ov_state;
+#define OV_RUNNING 0
+#define OV_STOP_WAIT_FOR_VS 1
+#define OV_STOP 2
 
-	uint8_t ready;
-	uint16_t img_w;
-	uint16_t img_h;
-	uint16_t px_x;
-	uint16_t px_y;
-} ov7670;
-
-void ov_init(ov7670 *ov);
-
-uint8_t ov_i2c_get(ov7670 *ov, uint8_t addr);
-void ov_i2c_set(ov7670 *ov, uint8_t addr, uint8_t val);
-void ov_i2c_bit(ov7670 *ov, uint8_t addr, uint8_t mask, uint8_t val);
-void ov_sleep(uint32_t iter);
-
-void ov_vsync(ov7670 *ov);
-void ov_href_up(ov7670 *ov);
-void ov_href_down(ov7670 *ov);
-
+/* resolution */
 typedef uint8_t ov_res;
 #define OV_RES_LIVE 0
 #define OV_RES_VGA 1
 #define OV_RES_QVGA 2
 #define OV_RES_CIF 3
 #define OV_RES_QCIF 4
-void ov_set_res(ov7670 *ov, ov_res res);
+
+typedef struct {
+	int (*i2c_get_reg)(uint8_t addr, uint8_t *buf, uint32_t len);
+	int (*i2c_set_reg)(uint8_t addr, uint8_t *buf, uint32_t len);
+	void (*wait_for_pclk)();
+	volatile uint8_t (*read_data)();
+	void (*callback_frame)();
+	void (*callback_row)();
+	void (*callback_pixel)(uint16_t color);
+
+	volatile ov_state state;
+	uint16_t img_w;
+	uint16_t img_h;
+	uint16_t img_skip_left;
+	uint16_t img_skip_right;
+	uint16_t img_skip_up;
+	uint16_t img_skip_down;
+	uint16_t px_x;
+	uint16_t px_y;
+	
+	uint8_t buffer[OV_BUFFER_SIZE];
+} ov7670;
+
+void ov_init(volatile ov7670 *ov);
+
+uint8_t ov_i2c_get(volatile ov7670 *ov, uint8_t addr);
+void ov_i2c_set(volatile ov7670 *ov, uint8_t addr, uint8_t val);
+void ov_i2c_bit(volatile ov7670 *ov, uint8_t addr, uint8_t mask, uint8_t val);
+void ov_sleep(uint32_t iter);
+
+void ov_start(volatile ov7670 *ov);
+void ov_stop(volatile ov7670 *ov);
+
+void ov_vsync(volatile ov7670 *ov);
+void ov_href_up(volatile ov7670 *ov);
+//void ov_href_down(ov7670 *ov);
+
+void ov_set_res(volatile ov7670 *ov, ov_res res);

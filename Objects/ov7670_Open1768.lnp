@@ -6,6 +6,7 @@
 ".\objects\open1768_lcd.o"
 ".\objects\ov7670.o"
 ".\objects\ov7670_lpc1768.o"
+".\objects\menu.o"
 ".\objects\i2c_lpc17xx.o"
 ".\objects\uart_lpc17xx.o"
 ".\objects\gpdma_lpc17xx.o"

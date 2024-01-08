@@ -24,6 +24,8 @@ void lcd_write_str(uint16_t x, uint16_t y, uint16_t color1, uint16_t color2, con
 void lcd_write(uint16_t x, uint16_t y, uint16_t color1, uint16_t color2, const char *format, ...);
 void lcd_flush(uint16_t color);
 int lcd_row(int n);
+int lcd_column(int n);
+uint16_t lcd_rgb(uint8_t r, uint8_t g, uint8_t b);
 
 typedef struct {
 	uint16_t start_x;
