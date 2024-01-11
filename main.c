@@ -1,34 +1,32 @@
 // Leon Ozog 2023/2024
 #include "LPC17xx.h"
-#include "Driver_USART.h"
-extern ARM_DRIVER_USART Driver_USART0;
-static ARM_DRIVER_USART * USARTdrv = &Driver_USART0;
 
 #include "ov7670_LPC1768.h"
 #include "lcd_ctrl.h"
 #include "menu.h"
+#include "sender.h"
 
 lcd_img img;
 volatile menu options_menu;
 
-/* img recording */
-void callback_frame()
+/* display callbacks */
+void display_callback_frame()
 {
 	volatile ov7670 *ov = ov_lpc1768_get_handle();
 	lcd_img_start(&img, (LCD_W - ov->img_w + ov->img_skip_left + ov->img_skip_right)>>1, 
 	(LCD_H - ov->img_h + ov->img_skip_up + ov->img_skip_down)>>1);
 }
 
-void callback_row()
+void display_callback_row()
 {
 	lcd_img_row(&img);
 }
 
-void callback_pixel(uint16_t color)
+void display_callback_pixel(uint16_t color)
 {
 	lcd_img_pixel(&img, color);
 }
-/* img recording */
+/* display callbacks */
 
 /* button interupts */
 #define PINSEL_EINT0    20
@@ -64,13 +62,12 @@ void EINT1_IRQHandler(void)
 	else
 	{
 		/* take photo */
-		/*NVIC_DisableIRQ(EINT0_IRQn);
+		ov_lpc1768_stop();
+		NVIC_DisableIRQ(EINT0_IRQn);
 		NVIC_DisableIRQ(EINT1_IRQn);
-		volatile ov7670 *ov;
-		ov_stop(ov);
+		lcd_flush(LCD_white);
 		
-		NVIC_EnableIRQ(EINT0_IRQn);
-		NVIC_EnableIRQ(EINT1_IRQn);*/
+		sender_send("png");
 	}
 	LPC_SC->EXTINT = (1<<SBIT_EINT1); // Clear Interrupt Flag
 }
@@ -82,28 +79,30 @@ void callback_options_menu_exit(void)
 	ov_lpc1768_start();
 }
 
+void sender_callback_end()
+{
+	ov_lpc1768_register_callbacks(display_callback_frame, display_callback_row, display_callback_pixel);
+	ov_lpc1768_start();
+	NVIC_EnableIRQ(EINT0_IRQn);
+	NVIC_EnableIRQ(EINT1_IRQn);
+}
+
 int main()
 {
 	/* disable interupts */
 	NVIC_DisableIRQ(EINT0_IRQn);    
   NVIC_DisableIRQ(EINT1_IRQn);
-	/*USARTdrv->Initialize(NULL);
-	USARTdrv->PowerControl(ARM_POWER_FULL);
-	USARTdrv->Control(ARM_USART_MODE_ASYNCHRONOUS |
-				  ARM_USART_DATA_BITS_8 |
-				  ARM_USART_PARITY_NONE |
-				  ARM_USART_STOP_BITS_1 |
-				  ARM_USART_FLOW_CONTROL_NONE, 9600);
-	USARTdrv->Control (ARM_USART_CONTROL_TX, 1);
-    USARTdrv->Control (ARM_USART_CONTROL_RX, 1);
-	USARTdrv->Send("\n\rSTART\n\r", 10);*/
+	
 	lcd_init();
 	lcd_flush(LCD_blue);
 	lcd_flush(LCD_black);
 	
 	/* initialize camera */
-	ov_error err = ov_lpc1768_init(callback_frame, callback_row, callback_pixel);
+	ov_error err = ov_lpc1768_init(display_callback_frame, display_callback_row, display_callback_pixel);
 	lcd_write(5, lcd_row(0), LCD_white, LCD_black, "init: %s", ov_error_what(err));
+	
+	/* initialize image sender */
+	sender_init(sender_callback_end);
 	
 	/* initialize options menu */
 	menu_init(&options_menu, callback_options_menu_exit);

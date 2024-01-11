@@ -13,6 +13,7 @@
 // GND PWDN
 
 ov_error ov_lpc1768_init(void (*callback_new_frame)(), void (*callback_row_ready)(), void (*callback_pixel)(uint16_t));
+void ov_lpc1768_register_callbacks(void (*callback_frame)(), void (*callback_row)(), void (*callback_pixel)(uint16_t));
 volatile ov7670* ov_lpc1768_get_handle(void);
 void ov_lpc1768_start(void);
 void ov_lpc1768_stop(void);

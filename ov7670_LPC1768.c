@@ -126,10 +126,7 @@ ov_error ov_lpc1768_init(void (*callback_frame)(), void (*callback_row)(), void 
 	ov.read_data = read_data;
 	
 	/* register callbacks */
-	ov.callback_frame = callback_frame;
-	ov.callback_row = callback_row;
-	ov.callback_pixel = callback_pixel;
-	
+	ov_lpc1768_register_callbacks(callback_frame, callback_row, callback_pixel);
 	
 	/* init structure */
 	ov_init(&ov);
@@ -175,6 +172,13 @@ ov_error ov_lpc1768_init(void (*callback_frame)(), void (*callback_row)(), void 
 	NVIC_EnableIRQ(EINT3_IRQn);
 	
 	return OV_A_OKAY;
+}
+
+void ov_lpc1768_register_callbacks(void (*callback_frame)(), void (*callback_row)(), void (*callback_pixel)(uint16_t))
+{
+	ov.callback_frame = callback_frame;
+	ov.callback_row = callback_row;
+	ov.callback_pixel = callback_pixel;
 }
 
 volatile ov7670* ov_lpc1768_get_handle()
