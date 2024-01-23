@@ -22,27 +22,28 @@ Dialog DLL:      TCM.DLL V1.56.4.0
  
 <h2>Project:</h2>
 C:\Users\leonozog\Desktop\AGH\Semestr 5\5SW\prj\ov7670_Open1768\ov7670_Open1768.uvprojx
-Project File Date:  01/08/2024
+Project File Date:  01/23/2024
 
 <h2>Output:</h2>
 *** Using Compiler 'V6.19', folder: 'C:\Keil_v5\ARM\ARMCLANG\Bin'
 Rebuild target 'Target 1'
-compiling LCD_ILI9325.c...
 assembling startup_LPC17xx.s...
-compiling system_LPC17xx.c...
-compiling asciiLib.c...
 compiling PIN_LPC17xx.c...
-compiling lcd_ctrl.c...
-compiling main.c...
-compiling ov7670_LPC1768.c...
-compiling GPDMA_LPC17xx.c...
-compiling menu.c...
-compiling ov7670.c...
-compiling Open1768_LCD.c...
+compiling asciiLib.c...
+compiling sender.c...
 compiling I2C_LPC17xx.c...
-compiling UART_LPC17xx.c...
+compiling LCD_ILI9325.c...
+compiling system_LPC17xx.c...
+compiling menu.c...
+compiling main.c...
+compiling lcd_ctrl.c...
+compiling uart.c...
+compiling ov7670.c...
+compiling ov7670_LPC1768.c...
+compiling Open1768_LCD.c...
+compiling GPDMA_LPC17xx.c...
 linking...
-Program Size: Code=17108 RO-data=3896 RW-data=8 ZI-data=2304  
+Program Size: Code=18440 RO-data=3912 RW-data=8 ZI-data=32288  
 ".\Objects\ov7670_Open1768.axf" - 0 Error(s), 0 Warning(s).
 
 <h2>Software Packages used:</h2>
@@ -52,7 +53,6 @@ Package Vendor: ARM
                 ARM.CMSIS.5.9.0
                 CMSIS (Common Microcontroller Software Interface Standard)
    * Component: I2C Version: 2.4.0
-   * Component: USART Version: 2.4.0
    * Component: CORE Version: 5.6.0
 
 Package Vendor: Keil
@@ -60,7 +60,6 @@ Package Vendor: Keil
                 Keil.LPC1700_DFP.2.6.1
                 NXP LPC1700 Series Device Support, Drivers and Examples for MCB1700, Open1768 and LPC1788-32
    * Component: I2C Version: 2.6.0
-   * Component: USART Version: 2.10.0
    * Component: GPDMA Version: 1.2.0
    * Component: PIN Version: 1.0.0
    * Component: Startup Version: 1.0.0
@@ -78,20 +77,14 @@ Package Vendor: Keil
    * Component: ::CMSIS Driver:I2C:2.4.0 (API)
       Include file:  CMSIS/Driver/Include/Driver_I2C.h
 
-   * Component: ::CMSIS Driver:USART:2.4.0 (API)
-      Include file:  CMSIS/Driver/Include/Driver_USART.h
-
    * Component: ARM::CMSIS:CORE:5.6.0
 
    * Component: Keil::CMSIS Driver:I2C:2.6.0
       Source file:   RTE_Driver/I2C_LPC17xx.c
 
-   * Component: Keil::CMSIS Driver:USART:2.10.0
-      Source file:   RTE_Driver/UART_LPC17xx.c
-
    * Component: Keil::Device:GPDMA:1.2.0
-      Include file:  RTE_Driver/GPDMA_LPC17xx.h
       Source file:   RTE_Driver/GPDMA_LPC17xx.c
+      Include file:  RTE_Driver/GPDMA_LPC17xx.h
 
    * Component: Keil::Device:PIN:1.0.0
       Include file:  RTE_Driver/PIN_LPC17xx.h
@@ -100,8 +93,8 @@ Package Vendor: Keil
    * Component: Keil::Device:Startup:1.0.0
       Include file:  Device/Include/LPC17xx.h
       Source file:   Device/Source/ARM/startup_LPC17xx.s
-      Include file:  RTE_Driver/Config/RTE_Device.h
       Source file:   Device/Source/system_LPC17xx.c
+      Include file:  RTE_Driver/Config/RTE_Device.h
 Build Time Elapsed:  00:00:01
 </pre>
 </body>

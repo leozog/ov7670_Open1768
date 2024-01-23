@@ -26,6 +26,7 @@ void ov_init(volatile ov7670 *ov)
 	
 	/* set internal clock to (clkout / 8) */
 	ov_i2c_set(ov, OV_REG_CLKRC, 0x07);
+	//ov_i2c_set(ov, OV_REG_CLKRC, 0x0F);
 	
 	
 	/* set color output to 565 */
@@ -90,12 +91,12 @@ void ov_vsync(volatile ov7670 *ov)
 	if(ov->state == OV_STOP)
 		return;
 	
+	if(ov->state == OV_STOP_WAIT_FOR_VS)
+		ov->state = OV_RUNNING;
+	
 	ov->px_y = 0;
 	
 	ov->callback_frame();
-	
-	if(ov->state == OV_STOP_WAIT_FOR_VS)
-		ov->state = OV_RUNNING;
 }
 
 void ov_href_up(volatile ov7670 *ov)

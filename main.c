@@ -1,6 +1,7 @@
 // Leon Ozog 2023/2024
 #include "LPC17xx.h"
 
+#include "ov7670.h"
 #include "ov7670_LPC1768.h"
 #include "lcd_ctrl.h"
 #include "menu.h"
@@ -52,6 +53,7 @@ void EINT0_IRQHandler(void)
 	LPC_SC->EXTINT = (1<<SBIT_EINT0); // Clear Interrupt Flag
 }
 
+volatile int eint1_req = 0;
 
 void EINT1_IRQHandler(void)
 {
@@ -61,13 +63,13 @@ void EINT1_IRQHandler(void)
 	}
 	else
 	{
-		/* take photo */
-		ov_lpc1768_stop();
-		NVIC_DisableIRQ(EINT0_IRQn);
-		NVIC_DisableIRQ(EINT1_IRQn);
-		lcd_flush(LCD_white);
-		
-		sender_send("png");
+		if(!sender_get_state())
+		{
+			
+			/* take photo */
+			ov_lpc1768_stop();
+			eint1_req = 1; // cant use i2c in interrupt so i need to do a hacky solution
+		}
 	}
 	LPC_SC->EXTINT = (1<<SBIT_EINT1); // Clear Interrupt Flag
 }
@@ -81,10 +83,7 @@ void callback_options_menu_exit(void)
 
 void sender_callback_end()
 {
-	ov_lpc1768_register_callbacks(display_callback_frame, display_callback_row, display_callback_pixel);
-	ov_lpc1768_start();
-	NVIC_EnableIRQ(EINT0_IRQn);
-	NVIC_EnableIRQ(EINT1_IRQn);
+	eint1_req = 2;
 }
 
 int main()
@@ -135,11 +134,50 @@ int main()
 	
 	
 	/* start cammera */
-	//volatile ov7670 *ov = ov_get_handle();
-	//ov_start(ov);
+	ov_lpc1768_start();
 	
+	int iter = 0;
 	while(1)
 	{
-		;
+		if(++iter % 1000 && eint1_req)
+		{
+			if(eint1_req == 1)
+			{
+				NVIC_DisableIRQ(EINT0_IRQn);
+				NVIC_DisableIRQ(EINT1_IRQn);
+				lcd_flush(LCD_white);
+				
+				uint8_t m_res = menu_get_selected(&options_menu, 0);
+				switch(m_res)
+				{
+					case 0: ov_lpc1768_set_res(OV_RES_VGA);  break;
+					case 1: ov_lpc1768_set_res(OV_RES_QVGA); break;
+					case 2: ov_lpc1768_set_res(OV_RES_CIF);  break;
+					case 3: ov_lpc1768_set_res(OV_RES_QCIF); break;
+				}
+				
+				uint8_t m_for = menu_get_selected(&options_menu, 1);
+				
+				switch(m_for)
+				{
+					case 0: sender_send("jpg"); break;
+					case 1: sender_send("png"); break;
+					case 2: sender_send("bmp"); break;
+				}
+			}
+			else if(eint1_req == 2)
+			{
+				lcd_flush(LCD_black);
+				ov_lpc1768_set_res(OV_RES_LIVE);
+				ov_lpc1768_register_callbacks(display_callback_frame, display_callback_row, display_callback_pixel);
+				
+				LPC_SC->EXTINT = (1<<SBIT_EINT1); // Clear Interrupt Flag
+				NVIC_EnableIRQ(EINT0_IRQn);
+				NVIC_EnableIRQ(EINT1_IRQn);
+				
+				ov_lpc1768_start();
+			}
+			eint1_req = 0;
+		}
 	}
 }

@@ -1,4 +1,5 @@
 // Leon Ozog 2023/2024
+#pragma once
 #include <stdint.h>
 
 /* i2c address */

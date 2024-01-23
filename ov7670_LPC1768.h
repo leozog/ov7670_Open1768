@@ -1,4 +1,5 @@
 // Leon Ozog 2023/2024
+#pragma once
 #include "ov7670.h"
 
 // P0.27, P0.28 I2C 
@@ -17,3 +18,4 @@ void ov_lpc1768_register_callbacks(void (*callback_frame)(), void (*callback_row
 volatile ov7670* ov_lpc1768_get_handle(void);
 void ov_lpc1768_start(void);
 void ov_lpc1768_stop(void);
+void ov_lpc1768_set_res(ov_res res);

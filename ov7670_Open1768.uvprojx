@@ -459,6 +459,26 @@
               <FileType>1</FileType>
               <FilePath>.\menu.c</FilePath>
             </File>
+            <File>
+              <FileName>sender.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\sender.h</FilePath>
+            </File>
+            <File>
+              <FileName>sender.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sender.c</FilePath>
+            </File>
+            <File>
+              <FileName>uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\uart.c</FilePath>
+            </File>
+            <File>
+              <FileName>uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\uart.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -482,12 +502,6 @@
           <targetInfo name="Target 1"/>
         </targetInfos>
       </api>
-      <api Capiversion="2.4.0" Cclass="CMSIS Driver" Cgroup="USART" exclusive="0">
-        <package name="CMSIS" schemaVersion="1.7.7" url="http://www.keil.com/pack/" vendor="ARM" version="5.9.0"/>
-        <targetInfos>
-          <targetInfo name="Target 1"/>
-        </targetInfos>
-      </api>
     </apis>
     <components>
       <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="5.6.0" condition="ARMv6_7_8-M Device">
@@ -497,12 +511,6 @@
         </targetInfos>
       </component>
       <component Capiversion="2.2.0" Cclass="CMSIS Driver" Cgroup="I2C" Cvendor="Keil" Cversion="2.6.0" condition="LPC17xx CMSIS PIN">
-        <package name="LPC1700_DFP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="2.6.1"/>
-        <targetInfos>
-          <targetInfo name="Target 1"/>
-        </targetInfos>
-      </component>
-      <component Capiversion="2.1.0" Cclass="CMSIS Driver" Cgroup="USART" Cvendor="Keil" Cversion="2.10.0" condition="LPC1700 CMSIS PIN GPDMA">
         <package name="LPC1700_DFP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="2.6.1"/>
         <targetInfos>
           <targetInfo name="Target 1"/>

@@ -188,6 +188,8 @@ volatile ov7670* ov_lpc1768_get_handle()
 
 void ov_lpc1768_start()
 {
+	//LPC_GPIOINT->IO0IntEnR |= P0_16_IRQ;
+	//LPC_GPIOINT->IO0IntEnR |= P0_17_IRQ;
 	LPC_GPIOINT->IO0IntClr = P0_16_IRQ; // Clear the interrupts.
 	LPC_GPIOINT->IO0IntClr = P0_17_IRQ; //
 	NVIC_EnableIRQ(EINT3_IRQn);
@@ -198,6 +200,13 @@ void ov_lpc1768_stop()
 {
 	ov_stop(&ov);
 	NVIC_DisableIRQ(EINT3_IRQn);
+	//LPC_GPIOINT->IO0IntEnR &= ~P0_16_IRQ;
+	//LPC_GPIOINT->IO0IntEnR &= ~P0_17_IRQ;
 	LPC_GPIOINT->IO0IntClr = P0_16_IRQ; // Clear the interrupts.
 	LPC_GPIOINT->IO0IntClr = P0_17_IRQ; //
+}
+
+void ov_lpc1768_set_res(ov_res res)
+{
+	ov_set_res(&ov, res);
 }
